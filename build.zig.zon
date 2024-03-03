@@ -1,0 +1,22 @@
+.{
+    .name = "mysql_example",
+
+    .version = "0.0.0",
+
+    .dependencies = .{
+
+        .zconn = .{
+            // clone zconn from github
+            // replace this with path to clone
+            .path = "../mysql_connector",
+        },
+    },
+
+ 
+    .paths = .{
+        "",
+        //"build.zig",
+        //"build.zig.zon",
+        //"src",
+    },
+}
