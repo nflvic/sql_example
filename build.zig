@@ -12,23 +12,28 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize
     });
 
-    const example = b.addExecutable(.{
+    //_= pkg;
+
+
+    const example = pkg.builder.addExecutable(.{
         .target = target,
         .name = "example",
         .root_source_file = .{ .path = "src/main.zig" },
-        .optimize = optimize
+        .optimize = optimize,
+        .link_libc = true
     });
 
-    b.installArtifact(example);
-
+    example.root_module.addImport("zconn", pkg.module("zconn"));
+    //_= example;
+    //_ = pkg;
     const libs_to_link = [_][]const u8{"mysqlclient","zstd","ssl", "crypto" ,"resolv" ,"m"};
-	
 
+    example.linkLibC();
+	
     for(libs_to_link) |l| {
         example.linkSystemLibrary(l);
     }
-    
 
-    example.addModule("zconn", pkg.module("zconn"));
+    b.installArtifact(example);
 
 }
